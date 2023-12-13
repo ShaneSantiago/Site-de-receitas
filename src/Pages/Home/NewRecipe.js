@@ -102,7 +102,6 @@ const NewRecipe = ({
             <Button colorScheme="orange" mr={3} onClick={onSubmitForm}>
               Adicionar receita
             </Button>
-            {/* Adicione aqui a lógica ou botões adicionais do rodapé do modal, se necessário */}
           </ModalFooter>
         </ModalContent>
       </Modal>

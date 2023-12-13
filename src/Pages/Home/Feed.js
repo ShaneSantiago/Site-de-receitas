@@ -93,7 +93,7 @@ const Feed = () => {
           backgroundImage={`linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${culinaria})`}
           backgroundRepeat="no-repeat"
           backgroundSize="cover"
-          height="570px"
+          height="500px"
           display="flex"
           alignItems="center"
           justifyContent="center"

@@ -8,10 +8,7 @@ import {
   FormLabel,
   Heading,
   HStack,
-  IconButton,
   Input,
-  InputGroup,
-  InputRightElement,
   Link,
   Spinner,
   Stack,
@@ -24,17 +21,12 @@ import { useState } from "react";
 // Importe sua imagem de fundo
 import backgroundImg from "../../assets/culinaria.jpg";
 import { useNavigate } from "react-router-dom";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
-
-  const showPassword = () => {
-    setShow(!show);
-  };
 
   const navigate = useNavigate();
 
@@ -49,17 +41,18 @@ const Login = () => {
     setLoading(true);
     const body = {
       email: email,
+      name: name,
       password: password,
     };
 
     axios
-      .post(`https://api-cookenu.onrender.com/user/login`, body)
+      .post(`https://api-cookenu.onrender.com/user/signup`, body)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         navigate("/feed");
         toast({
           title: "Sucesso.",
-          description: "Login efetuado com sucesso",
+          description: "Cadastro efetuado com sucesso",
           status: "success",
           duration: 9000,
           isClosable: true,
@@ -71,7 +64,7 @@ const Login = () => {
         setLoading(false);
         toast({
           title: "Ops",
-          description: "Verifique se email e senha estão corretos",
+          description: erro.response.data.message,
           status: "error",
           duration: 9000,
           isClosable: true,
@@ -85,6 +78,7 @@ const Login = () => {
       h="100vh"
       backgroundImage={`url(${backgroundImg})`}
       backgroundSize="140%"
+      //   bg="red"
       backgroundPosition="center"
       display="flex"
       alignItems="center"
@@ -92,25 +86,24 @@ const Login = () => {
     >
       <Container
         maxW="lg"
-        py={{ base: "12", md: "24" }}
+        py={{ base: "12", md: "10" }}
         px={{ base: "0", sm: "8" }}
       >
         <Stack spacing="8">
           <Box
-            mt="10px"
             py={{ base: "0", sm: "8" }}
             px={{ base: "4", sm: "10" }}
             bgGradient="linear(to-r, teal.500, green.500)"
             boxShadow={{ base: "none", sm: "md" }}
             borderRadius={{ base: "none", sm: "xl" }}
           >
-            <Stack spacing="6">
+            <Stack>
               <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
                 <Heading color="white" size={{ base: "xs", md: "sm" }}>
-                  Faça Login
+                  Faça seu cadastro
                 </Heading>
-                <Text color="white" onClick={(e) => navigate("/signup")}>
-                  Não tem uma conta? <Link href="#">Cadastre-se</Link>
+                <Text color="white" onClick={(e) => navigate("/")}>
+                  Já possui conta? <Link href="#">Faça login</Link>
                 </Text>
               </Stack>
               <Stack spacing="5">
@@ -128,39 +121,35 @@ const Login = () => {
                 </FormControl>
 
                 <FormControl>
+                  <FormLabel htmlFor="name" color="white">
+                    Nome
+                  </FormLabel>
+                  <Input
+                    id="name"
+                    color="white"
+                    type="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </FormControl>
+
+                <FormControl>
                   <FormLabel htmlFor="password" color="white">
                     Senha
                   </FormLabel>
-                  <InputGroup>
-                    <Input
-                      id="password"
-                      color="white"
-                      type={show ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <InputRightElement width="4.5rem">
-                      <IconButton
-                        h="1.75rem"
-                        size="sm"
-                        onClick={() => setShow(!show)}
-                        icon={show ? <ViewIcon /> : <ViewOffIcon />}
-                      />
-                    </InputRightElement>
-                  </InputGroup>
+                  <Input
+                    id="password"
+                    color="white"
+                    type="text"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </FormControl>
               </Stack>
-              <HStack justify="space-between">
-                <Checkbox defaultChecked color="white">
-                  Remember me
-                </Checkbox>
-                <Button variant="text" size="sm" color="white">
-                  Esqueceu sua senha?
-                </Button>
-              </HStack>
-              <Stack spacing="6">
+
+              <Stack spacing="6" mt="30px">
                 <Button onClick={onSubmit}>
-                  {loading ? <Spinner /> : "Entrar"}
+                  {loading ? <Spinner /> : "Cadastrar"}
                 </Button>
                 <HStack>
                   <Divider />
@@ -175,4 +164,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
