@@ -21,7 +21,6 @@ import {
 import axios from "axios";
 import { useState } from "react";
 
-// Importe sua imagem de fundo
 import backgroundImg from "../../assets/culinaria.jpg";
 import { useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
